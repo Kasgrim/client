@@ -1,1 +1,153 @@
-<h1>Hello world</h1>
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title> Song of Avaria </title>
+		<meta name="author" content="Evennia">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+		<link rel="icon" type="image/x-icon" href="https://songofavaria.com/static/website/images/logo.png">
+		<link rel="stylesheet" type="text/css" href="./webclient.css">
+		<link rel="stylesheet" type="text/css" href="./keybinds_small.css">
+		<link rel="stylesheet" type="text/css" href="./xterm256.css">
+		<script language="javascript" type="text/javascript">
+			var wsactive = true;
+			var csessid = "";
+			var wsurl = "wss://songofavaria.com/ws";
+		</script>
+	</head>
+	<body>
+		<nav id="main_webclient_nav" aria-label="main">
+			<hr role="presentation">
+			<button class="nav-button" onclick="openPopUp('https://songofavaria.com', 'Song of Avaria')">Website</button>
+			<hr role="presentation">
+			<button class="nav-button" onclick="openPopUp('https://songofavaria.com/help_system/', 'Help Index')">Help</button>
+			<hr role="presentation">
+			<button class="nav-button" onclick="openPopUp('http://songofavaria.com:8080/mediawiki/index.php?title=Main_Page', 'AvariaWiki')">Wiki</button>
+			<hr role="presentation">
+			<button class="nav-button" onclick="openPopUp('https://songofavaria.com/calendar/month_view/now', 'Calendar')">Calendar</button>
+			<hr role="presentation">
+			<button class="nav-button" onclick="openPopUp('https://songofavaria.com/forum', 'Forum')">Forum</button>
+			<hr role="presentation"/>
+		</nav>
+		<nav id="mobile_webclient_nav" aria-label="tabs">
+			<button id="log_button" class="mobile-only-button" onclick="showLogs()">Channels</button>
+			<button id="map_button" class="mobile-only-button" onclick="showMap()">Map</button>
+			<button id="game_button" class="mobile-only-button" onclick="showGame()" disabled="">Game</button>
+		</nav>
+		<div id="left">
+			<div id="main">
+				<div id="game" class="log" role="log">
+				<div class="message">
+				</div>
+			</div>
+			<!--<p id="prompt" aria-live="polite"></p>
+			<div id="toggles">
+			temporarily turning off since light mode isn't set up
+				<label title="Toggle between Dark and Light mode" class="switch">
+					<input id="theme_toggle" type="checkbox" onclick="javascript:toggleTheme(this);">				<span class="slider"></span>
+					<span>Dark Mode</font>
+				</label>
+			</div>-->
+			</div>
+			<div class="input-box">
+				<form id="input_form" method="post">
+					<textarea id="input_box" class="input_box" name="input_box" placeholder="" maxlength="1000"></textarea>
+					<button type="button" aria-roledescription="send" id="send_button" class="send-button"> &gt; </button>
+				</form>
+			</div>
+		</div>
+		<div id="right">
+			<div class="webclient-frame">
+			<div id="map">
+			</div>
+			</div>
+			<div id="extra_channels">
+				<div id="channel_data" style="display:none;" data-channel="0">
+					<!-- This is to hold data about what channel is active. -->
+				</div>
+
+				<div id="tab_area">
+					<span id="0_tab" class="chan-tab active-tab" data-channel="0">Roleplay</span>
+					<span id="4_tab" data-channel="4" data-channame="GameHelp" class="chan-tab">GameHelp</span>
+					<span id="7_tab" data-channel="7" data-channame="Public" class="chan-tab">Public</span>
+				</div>
+
+				<div id="communication">
+					<div id="0_log" class="comm_log" role="log"></div>
+					<div id="4_log" class="comm_log invisible">
+						<!--<div class="message">
+							<span class="color-006">(GameHelp): An average-height man wearing a heavy leather hood</span>
+							<span class="color-006">
+								relays, "Log splitting question for you all - I have a really hard time finding a starting line that registers properly. Do I need to replace the names I have people recognized as with what their default description is?"
+							</span>
+						</div>
+						<div class="message">
+							<span class="color-006">(GameHelp): An average-height man wearing a heavy leather hood</span>
+							<span class="color-006">
+								relays, "Log splitting question for you all - I have a really hard time finding a starting line that registers properly. Do I need to replace the names I have people recognized as with what their default description is?"
+							</span>
+						</div>
+						<div class="message">
+							<span class="color-006">(GameHelp): An average-height man wearing a heavy leather hood</span>
+							<span class="color-006">
+								relays, "Log splitting question for you all - I have a really hard time finding a starting line that registers properly. Do I need to replace the names I have people recognized as with what their default description is?"
+							</span>
+						</div>
+						<div class="message">
+							<span class="color-006">(GameHelp): An average-height man wearing a heavy leather hood</span>
+							<span class="color-006">
+								relays, "Log splitting question for you all - I have a really hard time finding a starting line that registers properly. Do I need to replace the names I have people recognized as with what their default description is?"
+							</span>
+						</div>
+						<div class="message">
+							<span class="color-006">(GameHelp): An average-height man wearing a heavy leather hood</span>
+							<span class="color-006">
+								relays, "Log splitting question for you all - I have a really hard time finding a starting line that registers properly. Do I need to replace the names I have people recognized as with what their default description is?"
+							</span>
+						</div>
+						<div class="message">
+							<span class="color-006">(GameHelp): An average-height man wearing a heavy leather hood</span>
+							<span class="color-006">
+								relays, "Log splitting question for you all - I have a really hard time finding a starting line that registers properly. Do I need to replace the names I have people recognized as with what their default description is?"
+							</span>
+						</div>
+						<div class="message">
+							<span class="color-006">(GameHelp): An average-height man wearing a heavy leather hood</span>
+							<span class="color-006">
+								relays, "Log splitting question for you all - I have a really hard time finding a starting line that registers properly. Do I need to replace the names I have people recognized as with what their default description is?"
+							</span>
+						</div>
+						<div class="message">
+							<span class="color-006">(GameHelp): An average-height man wearing a heavy leather hood</span>
+							<span class="color-006">
+								relays, "Log splitting question for you all - I have a really hard time finding a starting line that registers properly. Do I need to replace the names I have people recognized as with what their default description is?"
+							</span>
+						</div> -->
+					</div>
+					<div id="7_log" class="comm_log invisible"></div>
+				</div>
+			</div>
+			<div id="keybinds">
+				<span id="keybind_1" class="keybind_button invisible"></span>
+				<span id="keybind_2" class="keybind_button invisible"></span>
+				<span id="keybind_3" class="keybind_button invisible"></span>
+				<span id="keybind_4" class="keybind_button invisible"></span>
+				<span id="keybind_5" class="keybind_button invisible"></span>
+				<span id="keybind_6" class="keybind_button invisible"></span>
+				<span id="keybind_7" class="keybind_button invisible"></span>
+				<span id="keybind_8" class="keybind_button invisible"></span>
+				<span id="keybind_9" class="keybind_button invisible"></span>
+	<!--
+				<span id='keybind_0'></span>
+				<span id='keybind_enter'></span>
+				<span id='keybind_dot'></span>
+				<span id='keybind_plus'></span>
+				<span id='keybind_dash'></span>
+				<span id='keybind_star'></span>
+				<span id='keybind_slash'></span>
+	-->
+			</div>
+		</div>
+		<script src="./client.js" language="javascript" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>
