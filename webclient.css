@@ -42,7 +42,7 @@ body {
 	display: flex;
 	overflow: hidden;
   /* Spooky hack: darkens the background img */
-  background: linear-gradient( rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.95) ), url('./images/bg.png');
+  background: linear-gradient( rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.95) ), url('./bg.png');
 }
 
 /*
