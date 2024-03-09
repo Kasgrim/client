@@ -1,0 +1,470 @@
+/* EVELITE */
+
+/* default values start with dark theme */
+:root {
+	/* background property for the full page; not just color */
+	--page-bg: #000;
+	/* set the font for the whole page */
+	--font-family:
+	'Consolas', monospace;
+	/* color for echoed inputs */
+	--cmd-text: rgb(102,95,10);
+	/* page text color - default value here is to match expected ANSI-low-white client defaults */
+	--text-color: #c0c0c0;
+	/* defines the background for the log panes; also not just color */
+	--log-bg: #000;
+	/* colors for the input box */
+	--input-text: #fff;
+	--input-bg: #333;
+	/* colors for highlighted elements */
+	--hilight-text: rgb(222,215,130);
+	--hilight-bg: rgb(32,101,42);
+	/* other useful colors */
+	--error-color: #900;
+	--link-color: #482;
+	--visited-color: #261;
+	--hover-color: #482;
+
+	--border-color: rgb(32,101,42);
+	--system-text: var(
+	--error-color);
+}
+[data-theme="light"] {
+}
+
+[data-theme="dark"] {
+}
+
+
+/* page layout */
+body {
+	margin: 0;
+	display: flex;
+	overflow: hidden;
+  /* Spooky hack: darkens the background img */
+  background: linear-gradient( rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.95) ), url('./images/bg.png');
+}
+
+/*
+#background {
+  opacity: 0.05;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}*/
+
+#mobile_webclient_nav {
+   display: none;
+}
+
+#left {
+  flex: 80vw;
+  padding-left:70px;
+}
+
+#right {
+	flex: initial;
+	min-width: 200px;
+	width: 20vw;
+	display: flex;
+	flex-direction: column;
+	/*border-left: 2px solid var(--border-color);*/
+}
+
+
+#map {
+	max-height: 300px;
+	min-height: 300px;
+	font-size: 4.5pt;
+	flex: max-content;
+	padding: 1em;
+	border: 2px solid var(--border-color);
+	border-radius: 20px;
+	white-space: pre-wrap;
+	position: relative;
+	margin-top: 5px;
+	margin-right: 5px;
+}
+
+#map_background {
+  pointer-events:none;
+  opacity: 0.9;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+#prompt {
+	text-align: center;
+	height: 1.2em;
+}
+
+#communication {
+  background: linear-gradient(rgb(5, 5, 5), rgb(5, 5, 5)) padding-box, linear-gradient(to right, var(--border-color), rgba(5, 5, 5, 0)) border-box;
+  border-radius: 20px;
+  border: 2px solid transparent;
+	height: calc(100vh - 400px);
+	flex: initial;
+	margin-right: 10px;
+	overflow: auto;
+	font-size: 9pt;
+}
+
+#tab_area {
+    margin-top: 10px;
+	height: 2em;
+}
+
+#main {
+	height: calc(100vh - 8em);
+	padding: 0 1em;
+}
+
+#input_box {
+  height: 100%;
+	width: 95%;
+	margin-top: 15px;
+	margin-right: auto;
+	margin-bottom: 15px;
+	margin-left: 15px;
+	background-color: var(--input-bg);
+	color: var(--input-text);
+	font-size: inherit;
+	font-family: inherit;
+	border: none;
+	border-radius: 0.1em;
+}
+
+#input_box:focus {
+  outline: 1px solid var(--border-color);
+}
+
+#toggles {
+	height: 0;
+	overflow-y: visible;
+}
+#popup_buttons {
+	float: right;
+}
+
+#main_webclient_nav {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+/* class styling */
+
+.input-box {
+   position:relative;
+   width:99%;
+   height: 8em;
+}
+
+.invisible {
+	display: none !important;
+}
+
+.chan-tab {
+  border: 1px solid var(--border-color);
+  border-radius: 0.5em;
+  padding: .2em .2em;
+  margin: .2em .5em .2em .5em;
+  font-size: 9pt;
+  cursor: pointer;
+}
+
+.active-tab {
+  background-color: var(--hilight-bg);
+  color: var(--hilight-text);
+}
+
+.nav-button {
+  border: 1px solid;
+  border-radius: 0.5em;
+  padding: .2em 1em;
+  margin: .0 .5em;
+  cursor: pointer;
+  background-color: var(--hilight-bg);
+  color: var(--hilight-text);
+}
+
+.clickable {
+	cursor: pointer;
+}
+
+.frame-label {
+    text-align: center;
+    font-weight: bold;
+    font-size: 10pt;
+    padding:1px 1px 1px 1px;
+    margin-bottom:1px;
+}
+
+.webclient-frame {
+    position: relative;
+}
+
+.log {
+	overflow-x: wrap;
+	overflow-y: auto;
+	white-space: pre-wrap;
+	height: inherit;
+	margin-bottom: 5px;
+	margin-top: 20px;
+	margin-left: 10px;
+  padding-right: 50px;
+}
+
+.comm_log {
+	overflow-x: wrap;
+	overflow-y: hidden;
+  margin: 10px;
+}
+
+.mxplink {
+	cursor: pointer;
+	text-decoration: none;
+	font-weight: bold;
+	color: inherit;
+}
+
+.system {
+	color: var(--system-text);
+	font-style: italic;
+	padding-left: 1em;
+}
+/* this lets you set the prefix character for all echoed input lines */
+.echo::before {
+	content: "";
+}
+.echo {
+	color: var(--cmd-text);
+	display: inline;
+}
+/* We want echoes of commands to show up right in front of the prompt */
+.prompt {
+   float: left;
+   clear: left;
+}
+
+/* But we want messages to start on a new line, regardless of where the prompt is */
+.message {
+   clear: both;
+}
+
+.keybind_button {
+	border-radius: 0.3em;
+	border: 1px solid var(--border-color);
+	margin: 0.2em;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* element styling */
+body {
+	color: var(--text-color);
+	/*background: var(--page-bg);*/
+	font-family: var(--font-family);
+}
+
+a {
+	color: var(--link-color);
+}
+a:visited {
+	color: var(--visited-color);
+}
+a:hover {
+	color: var(--hover-color);
+}
+
+@-moz-document url-prefix() {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(222,215,130, .5) rgb(32,101,42, .5);
+    box-sizing: border-box;
+  }
+}
+
+/* Deal with scrollbar */
+*::-webkit-scrollbar {
+  width: 7px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgb(32,101,42, .5);
+  border-radius: 10px;
+  border: 1px solid rgb(32,101,42, .5);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(122,115,30, .5);
+  border-radius: 10px;
+  border: 1px solid rgb(222,215,130, .5);
+}
+
+/*** responsive/mobile layout handling will go down here ***/
+
+.mobile-only-button {
+  display: none;
+}
+.mobile-only-button:disabled {
+  display: none;
+}
+
+.send-button {
+  display: none;
+}
+
+@media
+only screen and (max-width:1000px) {
+
+    #main_webclient_nav {
+       display: none;
+       margin-top: 20px;
+    }
+
+    #mobile_webclient_nav {
+       display: flex;
+       flex-direction: row;
+       position: absolute;
+       top: 1px;
+       left: 1px;
+       border-bottom: 1px dashed var(--border-color);
+    }
+
+    #left {
+      width: 100%;
+      position: relative;
+      margin-top:20px;
+      margin-bottom: 40px;
+      padding-left:1px;
+      padding-right:1px;
+      font-size: 8pt;
+    }
+
+    #main {
+	  height: calc(100vh - 8em - 70px);
+	  padding-left: .1em;
+	  padding-right: .5em;
+	  padding-top: .1em;
+	  padding-bottom: .5em;
+	  margin-bottom: 1em;
+	}
+
+    #map {
+      margin-top: 50px;
+      font-size: 6pt;
+      max-height: 400px;
+	  min-height: 400px;
+    }
+
+    #extra_channels {
+      margin-top: 50px;
+    }
+
+    #tab_area {
+      margin-top: 10px;
+      height: 2em;
+	  border-top: 2px solid var(--border-color);
+    }
+
+    #right {
+	   flex: initial;
+	   min-width: 200px;
+	   width: 100%;
+	   display: none;
+	   flex-direction: column;
+	/*border-left: 2px solid var(--border-color);*/
+    }
+
+
+   #input_box {
+     position:absolute;
+     left:1px;
+     top:1px;
+     padding-left:2px;
+     padding-right:2px;
+     width:90%;
+     max-width:100%;
+     max-height:10em;
+     min-height:50px;
+     margin-top:5px;
+     margin-bottom:5px;
+     margin-left:5px;
+     margin-right:5px;
+     overflow: hidden;
+     font-size: 16px;
+     }
+
+   .send-button {
+      display: inline;
+      position:absolute;
+      right:1px;
+      top:1px;
+      width:5%;
+      max-height:10em;
+      min-height:50px;
+      margin-top:5px;
+      margin-bottom:5px;
+      margin-left:5px;
+      margin-right:5px;
+      border: 1px solid var(--border-color);
+      background-color: rgb(122,115,30);
+      color: rgb(222,215,130);
+      border-radius: 0.5em;
+      font-size: 12pt;
+      margin: .2em .5em .2em .5em;
+   }
+
+   .mobile-only-button {
+      display: inline;
+      border: 1px solid var(--border-color);
+      border-radius: 0.5em;
+      padding: .2em .2em;
+      margin: .2em .5em .2em .5em;
+      font-size: 9pt;
+      cursor: pointer;
+      background-color: var(--page-bg);
+      color: var(--link-color);
+   }
+
+   .mobile-only-button:disabled {
+      display: inline;
+      border: 1px solid var(--border-color);
+      border-radius: 0.5em;
+      padding: .2em .2em;
+      margin: .2em .5em .2em .5em;
+      font-size: 9pt;
+      background-color: var(--hilight-bg);
+      color: var(--hilight-text);
+   }
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: auto;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgb(32,101,42, .3);
+  border-radius: 20px;
+  border: .5px solid rgb(32,101,42, .3);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(122,115,30, .3);
+  border-radius: 20px;
+  border: .5px solid rgb(222,215,130, .3);
+}
+
+
+}
