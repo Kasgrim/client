@@ -173,6 +173,7 @@ function swapChannel(e) {
 	this.classList.add('active-tab');
 	channel_data.dataset.channel = channid;
 	new_log.scrollTop = new_log.scrollHeight;
+	comms.scrollTop = comms.scrollHeight;
 }
 
 // function to navigate back and forward through the tab's session input history
